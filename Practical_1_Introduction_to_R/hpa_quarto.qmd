@@ -1,0 +1,14 @@
+---
+title: "Mb1A practical 1 brain data analysis"
+author: "Olivia Brownlee"
+---
+In this document i will calculate and compare the total number of genes with regionally elevated expression in the forebrain between humans, pigs and mice
+```{r}
+total_human <- sum(180, 83, 57, 110)
+print(total_human)
+total_pig <- sum(109, 157, 31, 45)
+print(total_pig)
+total_mouse <- sum(55, 185, 60, 98)
+print(total_mouse)
+```
+the species with the highest number of genes with regionally elevated expression was humans with 430
