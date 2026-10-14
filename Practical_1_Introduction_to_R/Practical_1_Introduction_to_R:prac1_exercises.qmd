@@ -1,0 +1,68 @@
+---
+title: "Practical_1_Introduction_to_R/prac1_exercises.qmd"
+author: "Olivia Brownlee"
+---
+rounding
+
+```{r}
+round(3.14159, digits = 2)
+```
+repetition
+```{r}
+print(rep(5, 7))
+print(rep(x=5, times = 7))
+```
+different types of variables
+
+```{r}
+character_variable <- "hello"
+print(character_variable)
+print(class(character_variable))
+numerical_variable <- 5
+print(numerical_variable)
+print(class(numerical_variable))
+logical_variable <- FALSE
+print(logical_variable)
+print(class(logical_variable))
+```
+using different types of variables
+```{r}
+cell_ID_1 <- "CX1"
+cell_ID_2 <- "CX2"
+treated_1 <- TRUE
+treated_2 <- FALSE
+num_cells_before_1 <- 5415
+num_cells_before_2 <- 8123
+num_cells_after_1 <- 1432
+num_cells_after_2 <- 7543
+```
+
+bonus
+```{r}
+print(TRUE + TRUE)
+print(TRUE + FALSE)
+print(5 + TRUE)
+```
+
+```{r}
+x <- NA
+print(x == NA)
+print(is.na(x))
+```
+
+```{r}
+x <- 0 / 0
+print(x)
+print(is.na(x))
+print(is.nan(x))
+```
+
+```{r}
+print(round(2.5))
+print(round(3.5))
+```
+```{r}
+print(1/0)
+print(-1/0)
+```
+
