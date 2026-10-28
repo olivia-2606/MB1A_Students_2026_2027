@@ -1,0 +1,161 @@
+---
+title: "Practical_2_Data_Frames_and_Plots/worked_example.qmd"
+---
+```{r}
+library(gt)
+library(tidyverse)
+library(maps)
+
+```
+```{r}
+bird_breeding_sites <- read_csv("data/breeding_site_locations.csv")
+gt(bird_breeding_sites)
+```
+
+```{r}
+colnames(bird_breeding_sites)
+glimpse(bird_breeding_sites)
+```
+```{r}
+print(nrow(bird_breeding_sites))
+print(ncol(bird_breeding_sites))
+print(dim(bird_breeding_sites))
+```
+
+```{r}
+gt(head(bird_breeding_sites))
+```
+
+```{r}
+bird_migration_sites <- read_csv("data/migratory_connectivity_dataset.csv")
+gt(head(bird_migration_sites))
+```
+columns and rows - 100, 34
+data type tag - character
+data type birth - numeric
+```{r}
+colnames(bird_migration_sites)
+```
+
+```{r}
+my_numbers <- c(2,4,6,8)
+sum(my_numbers)
+```
+```{r}
+my_numbers <- c(2,4,6,8)
+my_numbers |> sum()
+```
+```{r}
+my_numbers <- c(2,4,6,8)
+print(my_numbers |>
+        sum () |>
+      sqrt())
+```
+
+```{r}
+my_numbers <- c(2,4,6,8)
+print(my_numbers |>
+        sum () |>
+      sqrt() |>
+        round())
+```
+
+```{r}
+my_numbers <- c(2,4,6,8)
+my_result <- my_numbers |>
+  sum() |>
+  sqrt() |>
+  round ()
+print (my_result)
+```
+
+```{r}
+bird_breeding_selected <- bird_breeding_sites |>
+  select(Site, Longitude, Latitude)
+
+gt(bird_breeding_selected)
+```
+```{r}
+bird_breeding_selected <- bird_breeding_sites |>
+  select(Site, Longitude, Latitude) |>
+  distinct()
+
+gt(bird_breeding_selected)
+```
+
+```{r}
+bird_breeding_selected <- bird_breeding_sites |>
+  select(Site, Longitude, Latitude) |>
+  distinct() |>
+  rename(Breeding_Longitude = Longitude, Breeding_Latitude = Latitude)
+
+gt(bird_breeding_selected)
+```
+
+```{r}
+bird_migration_selected <- bird_migration_sites |>
+  select(
+    Site,
+    winterLongitude,
+    winterLatitude,
+    pslon,
+    pslat,
+    iblon,
+    iblat,
+    awestlon,
+    awestlat
+  ) |>
+  distinct() |>
+  rename(
+    Winter_Longitude = winterLongitude,
+    Winter_Latitude = winterLatitude,
+    Stopover_Longitude = pslon,
+    Stopover_Latitude = pslat,
+    Iberian_Longitude = iblon,
+    Iberian_Latitude = iblat,
+    Westmost_Longitude = awestlon,
+    Westmost_Latitude = awestlat
+  )
+
+gt(head(bird_migration_selected))
+```
+
+```{r}
+y <- 12
+print (y==7)
+print (y < 15)
+print (y > 20)
+print (y<=12)
+```
+
+```{r}
+bird_breeding_dartmoor <- bird_breeding_selected |> filter(Site == "Dartmoor")
+
+gt(bird_breeding_dartmoor)
+```
+
+```{r}
+bird_breeding_not_dartmoor <- bird_breeding_selected |> filter(Site != "Dartmoor")
+
+gt(bird_breeding_not_dartmoor)
+```
+
+```{r}
+bird_breeding_long_10 <- bird_breeding_selected |> filter(Breeding_Longitude > 10)
+
+gt(bird_breeding_long_10)
+```
+
+```{r}
+bird_breeding_exc <- bird_breeding_selected |>
+  filter(Site != "Spain")
+gt(bird_breeding_exc)
+```
+
+```{r}
+bird_migration_exc <- bird_migration_selected |>
+  filter(Site != "Spain")
+
+gt(head(bird_migration_exc))
+```
+
