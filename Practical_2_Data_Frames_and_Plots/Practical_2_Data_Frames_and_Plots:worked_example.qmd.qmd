@@ -270,4 +270,98 @@ autumn_data <- combined_bird_piv |>
 write_csv(spring_data, "output/birds_spring.csv")
 write_csv(autumn_data, "output/birds_autumn.csv")
 ```
+```{r}
+gt(spring_data)
+```
+
+```{r}
+ggplot(spring_data)
+```
+
+```{r}
+ggplot(
+  spring_data,
+  aes(x = Longitude, y = Latitude)
+)
+```
+
+```{r}
+my_data_frame <- tibble(
+  fruit = c("apple", "pear", "banana"),
+  length = c(22, 30, 55),
+  weight = c(150, 165, 170)
+)
+
+gt(my_data_frame)
+```
+
+```{r}
+ggplot(my_data_frame, aes(x = length, y = weight)) +
+  geom_point()
+```
+
+```{r}
+ggplot(
+  spring_data,
+  aes(x = Longitude, y = Latitude)
+) +
+  geom_point()
+```
+```{r}
+ggplot(
+  spring_data,
+  aes(x = Longitude, y = Latitude)
+) +
+  geom_point() +
+  annotation_borders(linewidth = 0.2) +
+  coord_quickmap()
+```
+
+```{r}
+min_long <- spring_data |>
+  pull(Longitude) |>
+  min()
+
+print(min_long)
+```
+
+```{r}
+min_lon <- spring_data |>
+  pull(Longitude) |>
+  min()
+
+print(min_lon)
+```
+```{r}
+max_lon <- spring_data |>
+  pull(Longitude) |>
+  max()
+
+print(max_lon)
+```
+
+```{r}
+min_lat <- spring_data |>
+  pull(Latitude) |>
+  min()
+
+print(min_lat)
+```
+
+```{r}
+max_lat <- spring_data |>
+  pull(Latitude) |>
+  max()
+
+print(max_lat)
+```
+```{r}
+ggplot(
+  spring_data,
+  aes(x = Longitude, y = Latitude)
+) +
+  geom_point() +
+  annotation_borders(linewidth = 0.2) +
+  coord_quickmap(xlim = c(min_lon - 2, max_lon + 2))
+```
 
