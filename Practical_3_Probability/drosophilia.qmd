@@ -1,0 +1,91 @@
+---
+title: "drosophilia"
+---
+```{r}
+library(tidyverse)
+library(gt)
+set.seed(42)
+```
+
+```{r}
+dcounts <- read_csv("data/drosophila_counts.csv")
+gt(dcounts)
+```
+
+```{r}
+dcounts <- read_csv("data/drosophila_counts.csv")
+
+dros_summary <- dcounts |>
+  summarise(
+    total_nm = sum(Novel_Mutation_Count),
+    max_nm = max(Novel_Mutation_Count),
+    mean_nm = mean(Novel_Mutation_Count),
+    variance_nm = var(Novel_Mutation_Count)
+  )
+
+gt(dros_summary)
+```
+
+```{r}
+ggplot(dcounts, aes(x=Novel_Mutation_Count)) + 
+  geom_bar() +
+  ggtitle("Number of populations with each mutation count - obsesrved") +
+  xlab("Novel mutation count") +
+  ylab ("Number of populations")+
+  theme_minimal()
+```
+```{r}
+sample_mean <- dros_summary |> pull(mean_nm)
+n_populations <- nrow(dcounts)
+
+simulated_counts <- rpois(
+  n = n_populations,
+  lambda = sample_mean
+)
+print(simulated_counts)
+print(mean(simulated_counts))
+print(var(simulated_counts))
+sample_mean <- dros_summary |>
+  pull(mean_nm)
+sample_variance <- dros_summary |>
+  pull(variance_nm)
+
+sample_diff <- abs(sample_mean - sample_variance)
+```
+
+```{r}
+mean_sim <- c()
+var_sim <-c()
+for (i in seq_len(1000)) {
+  simulated_count <- rpois(
+    n = n_populations,
+    lambda = sample_mean
+  )
+  currentmean <- mean(simulated_count)
+  currentvar <- var(simulated_count)
+  mean_sim <- c(mean_sim, currentmean)
+  var_sim <- c(var_sim, currentvar)
+}
+df_sim <-tibble(
+  mean = mean_sim,
+  var = var_sim,
+  diff = abs(mean_sim - var_sim)
+)
+```
+
+```{r}
+ggplot(df_sim, aes(x=diff)) +
+  geom_histogram(bins=50)+
+  geom_vline(xintercept = sample_diff, color = 'red')+
+  ggtitle("Difference between mean and variance between samples and simulated") +
+  xlab("difference between mean and variance") + 
+  ylab("number of simulations")+
+  theme_minimal()
+```
+
+```{r}
+greater <- df_sim |> filter (diff > sample_diff)
+prop <-nrow(greater) / nrow(df_sim)
+print(prop)
+```
+
