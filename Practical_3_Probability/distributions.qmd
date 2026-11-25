@@ -1,0 +1,56 @@
+---
+title: "distributions"
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+library(janitor)
+set.seed(42)
+```
+```{r}
+fish <- read_csv("data/fish.csv") |> clean_names()
+geo <- fish |> filter (genus == "Geotria")
+ggplot(geo, aes(x = total_length_cm)) +
+  geom_histogram() +
+  ggtitle("Distribution of total length in Geotria") +
+  xlab("Total length (cm)") +
+  ylab("Number of fish") +
+  theme_minimal()
+```
+
+```{r}
+ggplot (geo, aes(
+  x=total_length_cm
+)) + 
+  geom_histogram(aes(y=after_stat(density)),
+            bins = 30
+            )+
+  ggtitle("distribution of total length in Geotria fish") +
+  xlab("total lengh (cm)")+
+  ylab("Density") +
+  theme_minimal()
+```
+
+```{r}
+# Calculate the observed mean and standard deviation
+mean_obs <- mean(pull(geo, total_length_cm))
+sd_obs <- sd(pull(geo, total_length_cm))
+
+# Draw the plot
+ggplot(geo, aes(
+  x = total_length_cm
+)) +
+  geom_histogram(aes(y = after_stat(density)),
+    bins = 50
+  ) +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = mean_obs, sd = sd_obs)
+  ) +
+  ggtitle("Distribution of total length in Geotria fish  -\nObserved and Theoretical") +
+  xlab("Total length (cm)") +
+  ylab("Density") +
+  theme_minimal()
+```
+
