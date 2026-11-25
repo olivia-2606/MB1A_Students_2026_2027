@@ -1,0 +1,173 @@
+---
+title: "prac3_exercises"
+---
+```{r}
+library (tibble)
+library (dplyr)
+install.packages("gt")
+library(gt)
+```
+
+```{r}
+for (i in seq_len(10)) {
+  print (i)
+}
+```
+
+```{r}
+for (i in seq_len (10)) {
+  j <- i + 2
+  sj <- sqrt(j)
+  rsj <- round(sj)
+  print(rsj)
+}
+```
+
+```{r}
+set.seed(42)
+```
+
+```{r}
+for (i in seq_len (20)) {
+  print (i^3)
+}
+```
+
+```{r}
+for (i in seq_len (5)) {
+  print(paste(sample(letters, 5, replace = TRUE), collapse=""))
+}
+```
+
+```{r}
+library(cowsay)
+species <- c("frog", "stegosaurus", "squirrel", "ghost")
+
+for (spp in species) {
+  say(paste("I am a", spp), by = spp)
+}
+```
+```{r}
+species <- c("monkey", "shark", "turkey", "snowman")
+
+for (spp in species) {
+  has_s <- startsWith(spp, "s")
+  say(paste("Do I start with an s?", has_s), by = spp)
+}
+```
+
+```{r}
+cat("A bird leaves west Africa.\n")
+
+for (i in seq_len(25)) {
+  cat("flap ")
+}
+
+cat("The bird arrives in Europe\n")
+cat("6 months later...\n")
+cat("A bird leaves Europe\n")
+
+for (i in seq_len(100)) {
+  cat("flap ")
+}
+cat("\nThe bird arrives in west Africa.")
+```
+```{r}
+cubed_nums <- c()
+
+for (i in seq_len(20)) {
+  res <- i^3
+  cubed_nums <- c(cubed_nums, res)
+}
+
+print(cubed_nums)
+```
+
+```{r}
+species <- c("monkey", "shark", "turkey", "snowman")
+species_df <- tibble()
+
+for (spp in species) {
+  has_s <- startsWith(spp, "s")
+  current_row <- tibble(
+    Species = spp,
+    Starts_with_S = has_s
+  )
+  species_df <- species_df |> bind_rows(current_row)
+}
+gt(species_df)
+```
+
+```{r}
+breakfast <- c("eggs", "bacon", "sausages", "toast")
+nums <- seq_len(5)
+break_df <- tibble()
+for (i in seq_len(10)) {
+  item <- sample(breakfast, size = 1)
+  num <- sample(nums, size = 1)
+  row <- tibble(
+    item = item,
+    count = num
+    )
+  break_df <- bind_rows (break_df, row)
+}
+gt(break_df)
+```
+
+```{r}
+coin_toss <- sample(c("Heads", "Tails"), size=1)
+print(coin_toss)
+```
+
+```{r}
+for (i in seq_len(5)) {
+  coin_toss <- sample(c("Heads", "Tails"),
+    size=1 )
+  print(coin_toss)
+}
+```
+
+```{r}
+coin_tosses <-sample(c("Heads", "Tails"),
+                     size=5,
+                     replace = TRUE)
+                     print(coin_tosses)
+                    
+```
+
+```{r}
+n_successes <- sum(coin_tosses == "Heads")
+print (n_successes)
+```
+
+```{r}
+coin_tosses <-sample(c("Heads", "Tails"),
+                     size=5,
+                     replace=TRUE,
+                     prob=c(0.7,0.3)
+)
+print(coin_tosses)
+```
+
+```{r}
+vector <- sample(c("Badger", "Mushroom", "Snake"),
+                 size = 100,
+                 replace = TRUE,
+                 prob = c(0.95, 0.04, 0.01))
+print(vector)
+```
+
+```{r}
+times <- 1000
+numberpertime <- 200
+count_pollinated_flowers <- rbinom(n = times, size = numberpertime, prob = 0.6)
+times_successful <- sum(count_pollinated_flowers >= 125)
+proportion <- times_successful/times
+print(proportion)
+```
+```{r}
+prob_under125 <- pbinom(124,200,0.6 )
+probover125 <- 1-prob_under125
+print(probover125)
+```
+
